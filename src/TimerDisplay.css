@@ -1,0 +1,56 @@
+.timer {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  text-align: center;
+  margin-top: 16px;
+}
+
+.cancel-btn {
+  margin-top: 16px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: #f44336;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancel-btn:hover,
+.cancel-btn:focus-visible {
+  background: #d32f2f;
+}
+
+.timer-transition {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.timer-transition.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* CSSTransition timer-fade classes */
+.timer-fade-enter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+.timer-fade-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.timer-fade-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+.timer-fade-exit-active {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.4s, transform 0.4s;
+}
