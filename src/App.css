@@ -1,3 +1,78 @@
+/* Responsive card list for small screens */
+.card-list {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  width: 100%;
+  justify-content: center;
+  align-items: stretch;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: #ffeaa7 #fffbe6;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px 0 rgba(255, 234, 167, 0.18);
+  transition: background 0.4s;
+}
+
+@media (max-width: 600px) {
+  .card-list {
+    flex-direction: column;
+    gap: 18px;
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px 0;
+    box-shadow: 0 4px 24px 0 rgba(255, 200, 100, 0.18);
+    border-radius: 18px;
+    scrollbar-width: thin;
+    scrollbar-color: #f7b731 #fffbe6;
+  }
+  .card-list::-webkit-scrollbar {
+    width: 8px;
+    background: #fffbe6;
+    border-radius: 8px;
+  }
+  .card-list::-webkit-scrollbar-thumb {
+    background: #f7b731;
+    border-radius: 8px;
+  }
+}
+/* Stylized Egg Timer heading */
+.egg-timer-heading {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #f7b731;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.12), 0 1px 0 #fff;
+  margin-bottom: 0.5em;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+}
+
+/* Stylized Egg Mode name */
+.egg-mode-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ff7675;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.7em;
+  text-shadow: 0 1px 8px rgba(255, 200, 100, 0.18);
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+}
+/* Main container for card list and timer */
+.main-container {
+  position: relative;
+  min-height: 320px;
+  width: 720px;
+  min-width: 320px;
+  max-width: 100vw;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  box-sizing: border-box;
+}
 .counter {
   font-size: 16px;
   padding: 5px 10px;

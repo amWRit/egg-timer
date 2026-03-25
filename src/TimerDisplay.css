@@ -1,38 +1,70 @@
+/* Overlay for timer, absolutely centered over card list */
+.timer-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s;
+}
+
 .timer {
-  background: #f9f9f9;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  background: linear-gradient(135deg, #fffbe6 60%, #ffe0e9 100%);
+  border-radius: 24px;
+  padding: 32px 20px;
+  box-shadow: 0 6px 32px 0 rgba(255, 193, 7, 0.18), 0 2px 12px 0 rgba(0,0,0,0.10);
   text-align: center;
   margin-top: 16px;
+  border: 3px solid #ffe082;
+  position: relative;
+  min-width: 140px;
+  min-height: 100px;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.timer p {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #d84315;
+  margin: 0 0 12px 0;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 12px #ffe082, 0 1px 2px #fffbe6;
+  animation: pop 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+@keyframes pop {
+  0% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
 .cancel-btn {
   margin-top: 16px;
-  padding: 8px 16px;
-  border-radius: 6px;
-  background: #f44336;
+  padding: 10px 24px;
+  border-radius: 8px;
+  background: #ffb300;
   color: #fff;
   border: none;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px 0 rgba(255, 193, 7, 0.18);
 }
 
 .cancel-btn:hover,
 .cancel-btn:focus-visible {
-  background: #d32f2f;
-}
-
-.timer-transition {
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.4s, transform 0.4s;
-}
-
-.timer-transition.show {
-  opacity: 1;
-  transform: scale(1);
+  background: #d84315;
+  transform: scale(1.06) rotate(-2deg);
 }
 
 /* CSSTransition timer-fade classes */
@@ -53,4 +85,108 @@
   opacity: 0;
   transform: scale(0.95);
   transition: opacity 0.4s, transform 0.4s;
+}
+
+.timer {
+  background: linear-gradient(135deg, #fffbe6 60%, #ffe0e9 100%);
+  border-radius: 24px;
+  padding: 36px 32px 28px 32px;
+  box-shadow: 0 6px 32px 0 rgba(255, 193, 7, 0.18), 0 2px 12px 0 rgba(0,0,0,0.10);
+  text-align: center;
+  margin-top: 16px;
+  border: 3px solid #ffe082;
+  position: relative;
+  min-width: 220px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer p {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #d84315;
+  margin: 0 0 12px 0;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 12px #ffe082, 0 1px 2px #fffbe6;
+  animation: pop 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+  .timer {
+    background: linear-gradient(135deg, #fffbe6 60%, #ffe0e9 100%);
+    border-radius: 24px;
+    padding: 36px 32px 28px 32px;
+    box-shadow: 0 6px 32px 0 rgba(255, 193, 7, 0.18), 0 2px 12px 0 rgba(0,0,0,0.10);
+    text-align: center;
+    margin-top: 16px;
+    border: 3px solid #ffe082;
+    position: relative;
+    min-width: 220px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .timer p {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #d84315;
+    margin: 0 0 12px 0;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 12px #ffe082, 0 1px 2px #fffbe6;
+    animation: pop 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .cancel-btn {
+    margin-top: 16px;
+    padding: 10px 24px;
+    border-radius: 8px;
+    background: #ffb300;
+    color: #fff;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 2px 8px 0 rgba(255, 193, 7, 0.18);
+  }
+
+  .cancel-btn:hover,
+  .cancel-btn:focus-visible {
+    background: #d84315;
+    transform: scale(1.06) rotate(-2deg);
+  }
+
+@keyframes pop {
+  0% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.cancel-btn {
+  margin-top: 16px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  background: #ffb300;
+  color: #fff;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px 0 rgba(255, 193, 7, 0.18);
+}
+
+.cancel-btn:hover,
+.cancel-btn:focus-visible {
+  background: #d84315;
+  transform: scale(1.06) rotate(-2deg);
 }

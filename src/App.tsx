@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import TimerButton from './TimerButton';
 import TimerDisplay from './TimerDisplay';
@@ -23,7 +23,7 @@ const MODE_ICONS = {
   0: <Egg />,
   1: <Egg />,
   2: <Egg />,
-  3: <Droplet />,
+  3: <Egg />,
 }
 
 function App() {
@@ -31,21 +31,27 @@ function App() {
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const [running, setRunning] = useState<boolean>(false);
   const [showTimer, setShowTimer] = useState<boolean>(false);
+  const timerRef = useRef(null);
+  const cardListRef = useRef(null);
 
   useEffect((() => {
 
   }), []);
 
-  useEffect((() => {
-    if( running && timeLeft > 0) {
+  useEffect(() => {
+    if (running) {
       const timer = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
+        setTimeLeft(prev => {
+          if (prev <= 1) {
+            setRunning(false);
+            return 0;
+          }
+          return prev - 1;
+        });
       }, 1000);
-
       return () => clearInterval(timer);
     }
-    
-  }), [running, timeLeft]);
+  }, [running]);
 
   useEffect((() => {
     if (timeLeft === 0 && running) {
@@ -57,10 +63,11 @@ function App() {
 
   const startTimer = (mode: string) => {
     const modeKey = getModeKeyNum(mode);
+    setShowTimer(true);
     setMode(modeKey);
     setTimeLeft(MODE_TIMES[modeKey]);
+    
     setRunning(true);
-    setShowTimer(true);
   }
 
   const getModeKeyNum = (key: string) => {
@@ -86,39 +93,48 @@ function App() {
 
   return (
     <main id="center">
-      <h1>Egg Timer</h1>
-      {!running && mode === null && (
-        <div className="card-list">
-          {Object.keys(MODE_NAMES).map((key) => (
-            <TimerButton
-              key={key}
-              icon={getModeIcon(getModeKeyNum(key))}
-              mode={getModeName(getModeKeyNum(key))}
-              onClick={() => startTimer(key)}
-              disabled={running}
-            />
-          ))}
+      <h1 className="egg-timer-heading">Egg Timer</h1>
+      <div className="main-container">
+        {/* Card List always rendered */}
+        <div
+          ref={cardListRef}
+          style={{
+            width: '100%',
+            opacity: !showTimer && mode === null ? 1 : 0,
+            transition: 'opacity 0.4s',
+            pointerEvents: !showTimer && mode === null ? 'auto' : 'none',
+          }}
+        >
+          <div className="card-list" style={{ width: '100%' }}>
+            {Object.keys(MODE_NAMES).map((key) => (
+              <TimerButton
+                key={key}
+                icon={getModeIcon(getModeKeyNum(key))}
+                mode={getModeName(getModeKeyNum(key))}
+                onClick={() => startTimer(key)}
+                disabled={running}
+              />
+            ))}
+          </div>
         </div>
-      )}
-      
-
-      <CSSTransition
-        in={showTimer} 
-        timeout={400} 
-        classNames="timer-fade" 
-        unmountOnExit
-      >
-        <div>
-          {mode != null && (
-            <>
-              <h2>{getModeName(mode)} Egg</h2>
+        {/* Timer absolutely centered over card list */}
+        <div
+          ref={timerRef}
+          className="timer-overlay"
+          style={{
+            opacity: showTimer && mode !== null ? 1 : 0,
+            pointerEvents: showTimer && mode !== null ? 'auto' : 'none',
+          }}
+        >
+          {mode !== null && (
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+              <h2 className="egg-mode-heading">{getModeName(mode)} Egg</h2>
               <TimerDisplay timeLeft={timeLeft} onCancel={handleCancel} />
-            </>
+            </div>
           )}
         </div>
-      </CSSTransition>
-
-    </main>
+      </div>
+    </main> 
   );
 }
 
