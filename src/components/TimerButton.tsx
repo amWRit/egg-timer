@@ -1,6 +1,5 @@
-import './TimerButton.css';
+import '../styles/TimerButton.css';
 import React from 'react';
-import { Egg } from 'lucide-react';
 
 interface TimerButtonProps {
   mode: string;

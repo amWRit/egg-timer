@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect, useState, useRef } from 'react';
 import { useTimer } from './useTimer';
-import './styles/App.css';
-import TimerButton from './components/TimerButton';
-import TimerDisplay from './components/TimerDisplay';
+import '../styles/App.css';
+import TimerButton from './TimerButton';
+import TimerDisplay from './TimerDisplay';
 import { Egg } from 'lucide-react';
-import EggReadyModal from './components/EggReadyModal';
+import EggReadyModal from './EggReadyModal';
 
 const MODE_NAMES: Record<number, string> = {
   0: 'Soft',
@@ -33,31 +33,42 @@ function App() {
   const [mode, setMode] = useState<number | null>(null);
   const [showTimer, setShowTimer] = useState<boolean>(false);
   const [initialTime, setInitialTime] = useState<number>(0);
-  const [timerKey, setTimerKey] = useState<number>(0);
   const timerRef = useRef(null);
   const cardListRef = useRef(null);
   const { timeLeft, isRunning, start, stop, reset, setTimeLeft } = useTimer(initialTime);
   const [showEggReadyModal, setEggReadyModal] = useState(false);
-
-  useEffect(() => {}, []);
+  
+  useEffect(() => {
+    stop();
+    setTimeLeft(0);
+    setMode(null);
+    // Optionally hide timer and modal as well
+    setShowTimer(false);
+    setEggReadyModal(false);
+  }, []);
 
   useEffect(() => {
     if (timeLeft === 0 && isRunning) {
       stop();
+      setTimeLeft(0);
+      setMode(null);
+      setShowTimer(false);
       setEggReadyModal(true);
     }
   }, [timeLeft, isRunning, stop]);
 
   const startTimer = (mode: string) => {
+    setEggReadyModal(false); // Hide modal if showing
+    stop();
+    reset();
+    setTimeLeft(0);
+    setMode(null);
     const modeKey = getModeKeyNum(mode);
     setShowTimer(true);
     setMode(modeKey);
-    setEggReadyModal(false); // Hide modal if showing
+    
     setInitialTime(MODE_TIMES[modeKey]);
-    setTimerKey(prev => prev + 1); // Force remount/reset
     setTimeout(() => {
-      reset();
-      setTimeLeft(MODE_TIMES[modeKey]);
       start();
     }, 0);
   };
@@ -81,6 +92,17 @@ function App() {
     setTimeout(() => {
       setShowTimer(false);
     }, 400);
+  };
+
+  // Handler to stop timer and close modal
+  const handleEggReadyClose = () => {
+    stop();
+    setTimeLeft(0);
+    setMode(null);
+    setTimeout(() => {
+      setShowTimer(false);
+    }, 400);
+    setEggReadyModal(false);
   };
 
   return (
@@ -119,14 +141,14 @@ function App() {
           }}
         >
           {mode !== null && (
-            <div key={timerKey} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
               <h2 className="egg-mode-heading">{getModeName(mode)} Egg</h2>
               <TimerDisplay timeLeft={timeLeft} onCancel={handleCancel} />
             </div>
           )}
         </div>
       </div>
-      <EggReadyModal show={showEggReadyModal} onClose={() => setEggReadyModal(false)} />
+      <EggReadyModal show={showEggReadyModal} onClose={handleEggReadyClose} />
     </main> 
   );
 }

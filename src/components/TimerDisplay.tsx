@@ -1,4 +1,4 @@
-import './TimerDisplay.css'
+import '../styles/TimerDisplay.css';
 import React from "react";
 
 interface TimerDisplayProps {

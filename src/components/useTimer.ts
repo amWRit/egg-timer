@@ -1,12 +1,26 @@
-import { useState, useEffect, useRef, useCallback, use } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 export function useTimer(initialTime: number) {
   const [timeLeft, setTimeLeft] = useState(initialTime);
   const [isRunning, setIsRunning] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Reset timer when initialTime changes
+  useEffect(() => {
+    setTimeLeft(initialTime);
+    setIsRunning(false);
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, [initialTime]);
+
   const start = useCallback(() => {
-    if (timerRef.current) return;
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    setTimeLeft(initialTime);
     setIsRunning(true);
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
@@ -20,7 +34,7 @@ export function useTimer(initialTime: number) {
         }
       });
     }, 1000);
-  }, []);
+  }, [initialTime]);
 
   const stop = useCallback(() => {
     if (timerRef.current) {
